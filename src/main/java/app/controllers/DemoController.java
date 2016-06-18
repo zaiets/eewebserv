@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class DemoController {
 
-    @RequestMapping(value = "/hello")
+    @RequestMapping(value = "/1")
     public ModelAndView hello(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title", "Title 1");
@@ -16,7 +16,7 @@ public class DemoController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/hi")
+    @RequestMapping(value = "/11")
     public ModelAndView hi(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("title", "Title 2");

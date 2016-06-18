@@ -4,12 +4,15 @@ package app.repositories.model;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Component
 @Entity
 @Table(name = "USERS",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "LOGIN")})
+                @UniqueConstraint(columnNames = "LOGIN"),
+                @UniqueConstraint(columnNames = "EMAIL"),
+        })
 public class User {
     @Id
     @GeneratedValue
@@ -18,6 +21,9 @@ public class User {
     @Basic
     @Column(name = "LOGIN", nullable=false)
     private String login;
+    @Basic
+    @Column(name = "EMAIL", nullable=false)
+    private String email;
     @Basic
     @Column(name = "PASSWORD", nullable=false)
     private String password;
@@ -30,8 +36,11 @@ public class User {
     @Basic
     @Column(name = "PATRONYMIC")
     private String patronymic;
-    @OneToOne(mappedBy = "user")
-    private UserRole role;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum('ADMIN','USER')")
+    private Role role;
+    @OneToMany(mappedBy = "user")
+    private List<UserToken> tokens;
 
     public User() {
     }
@@ -50,6 +59,14 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -84,12 +101,20 @@ public class User {
         this.patronymic = patronymic;
     }
 
-    public UserRole getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<UserToken> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<UserToken> tokens) {
+        this.tokens = tokens;
     }
 
     @Override
@@ -101,11 +126,15 @@ public class User {
 
         if (getId() != null ? !getId().equals(user.getId()) : user.getId() != null) return false;
         if (getLogin() != null ? !getLogin().equals(user.getLogin()) : user.getLogin() != null) return false;
+        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
         if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
             return false;
         if (getSurname() != null ? !getSurname().equals(user.getSurname()) : user.getSurname() != null) return false;
         if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
-        return getPatronymic() != null ? getPatronymic().equals(user.getPatronymic()) : user.getPatronymic() == null;
+        if (getPatronymic() != null ? !getPatronymic().equals(user.getPatronymic()) : user.getPatronymic() != null)
+            return false;
+        if (getRole() != user.getRole()) return false;
+        return getTokens() != null ? getTokens().equals(user.getTokens()) : user.getTokens() == null;
 
     }
 
@@ -113,24 +142,13 @@ public class User {
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
         result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
         result = 31 * result + (getSurname() != null ? getSurname().hashCode() : 0);
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getPatronymic() != null ? getPatronymic().hashCode() : 0);
+        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
+        result = 31 * result + (getTokens() != null ? getTokens().hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
-        sb.append(", login='").append(login).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", surname='").append(surname).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", patronymic='").append(patronymic).append('\'');
-        sb.append(", role=").append(role.getRole());
-        sb.append('}');
-        return sb.toString();
     }
 }
