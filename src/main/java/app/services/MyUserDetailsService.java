@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private UserDaoImpl userDao;
-    // 
+
+
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userDao.findByEmail(email);
         if (user == null) {
@@ -42,10 +43,10 @@ public class MyUserDetailsService implements UserDetailsService {
     }
     private List<String> getRoles(Integer role) {
         List<String> roles = new ArrayList<>();
-        if (role == 1) {
+        if (role == 0) {
             roles.add("ROLE_USER");
             roles.add("ROLE_ADMIN");
-        } else if (role == 2) {
+        } else if (role == 1) {
             roles.add("ROLE_USER");
         }
         return roles;

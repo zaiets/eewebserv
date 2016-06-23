@@ -2,7 +2,7 @@ package app.services;
 
 import app.dto.UserDto;
 import app.exceptions.EmailExistsException;
-import app.repositories.AbstractUserDao;
+import app.repositories.daoimpl.UserDaoImpl;
 import app.repositories.model.Role;
 import app.repositories.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,9 @@ import java.util.List;
 
 @Service
 public class UserService implements IUserService {
+
     @Autowired
-    private AbstractUserDao userDao;
+    private UserDaoImpl userDao;
 
     @Override
     public User read(int id) {

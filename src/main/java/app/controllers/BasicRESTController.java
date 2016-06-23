@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class BasicRESTController {
 
     @Autowired
-    private IUserService userService;
+    private IUserService iUserService;
 
     @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
     public String showRegistrationForm(WebRequest request, Model model) {
@@ -31,27 +31,27 @@ public class BasicRESTController {
     }
     @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
     public ModelAndView registerUserAccount
-            (@ModelAttribute("user") @Valid UserDto accountDto,
+            (@ModelAttribute("user") @Valid UserDto userDto,
              BindingResult result, WebRequest request, Errors errors) {
         User registered = new User();
         if (!result.hasErrors()) {
-            registered = createUserAccount(accountDto, result);
+            registered = createUserAccount(userDto, result);
         }
         if (registered == null) {
             result.rejectValue("email", "message.regError");
         }
         if (result.hasErrors()) {
-            return new ModelAndView("registration", "user", accountDto);
+            return new ModelAndView("registration", "user", userDto);
         }
         else {
-            return new ModelAndView("successRegister", "user", accountDto);
+            return new ModelAndView("successRegister", "user", userDto);
         }
     }
 
     private User createUserAccount(UserDto accountDto, BindingResult result) {
         User registered = null;
         try {
-            registered = userService.registerNewUserAccount(accountDto);
+            registered = iUserService.registerNewUserAccount(accountDto);
         } catch (EmailExistsException e) {
             return null;
         }
