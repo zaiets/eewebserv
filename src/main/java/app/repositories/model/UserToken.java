@@ -1,11 +1,8 @@
 package app.repositories.model;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Component
 @Entity
 @Table(name = "USER_ROLES",
         uniqueConstraints = {

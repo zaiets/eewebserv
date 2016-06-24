@@ -2,6 +2,7 @@ package app.repositories;
 
 
 import app.repositories.model.User;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
@@ -19,4 +20,8 @@ public abstract class AbstractUserDao implements IDao<User> {
     public abstract User update(int id, User user);
 
     public abstract User delete(int id);
+
+    public abstract SessionFactory getSessionFactory();
+
+    public abstract void setSessionFactory(SessionFactory sessionFactory);
 }

@@ -1,11 +1,8 @@
 package app.repositories.model;
 
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
-@Component
 @Entity
 @Table(name = "USERS",
         uniqueConstraints = {

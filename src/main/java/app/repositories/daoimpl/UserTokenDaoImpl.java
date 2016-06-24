@@ -16,11 +16,10 @@ import java.util.List;
 @Transactional
 public final class UserTokenDaoImpl extends AbstractUserTokenDao {
 
+    @Autowired
     private SessionFactory sessionFactory;
 
-    @Autowired
-    public UserTokenDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public UserTokenDaoImpl() {
     }
 
     @Override
@@ -59,5 +58,13 @@ public final class UserTokenDaoImpl extends AbstractUserTokenDao {
 
     private Session currentSession() {
         return sessionFactory.getCurrentSession();
+    }
+    @Override
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+    @Override
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }
