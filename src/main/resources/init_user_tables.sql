@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS user_tokens (
   last_used DATETIME,
   token     VARCHAR(256),
   FOREIGN KEY (user_id) REFERENCES users (id)
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+  UNIQUE (user_id)
 );
 
 

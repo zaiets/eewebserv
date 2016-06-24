@@ -69,4 +69,6 @@ public class UserService implements IUserService {
         User user = abstractUserDao.findByEmail(email);
         return user != null;
     }
+
+
 }

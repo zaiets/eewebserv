@@ -1,8 +1,6 @@
 package app.exceptions;
 
-import org.springframework.stereotype.Controller;
-
-@Controller
+//@Controller
 class ExceptionController {
 //    TODO
 //   @ExceptionHandler(???.class)

@@ -17,7 +17,7 @@ import java.util.Properties;
  
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "app.config.*" })
+@ComponentScan({ "app.*" })
 @PropertySource(value = { "/META-INF/database.properties" })
 public class HibernateConfiguration {
  

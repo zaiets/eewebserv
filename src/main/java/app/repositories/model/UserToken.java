@@ -1,8 +1,11 @@
 package app.repositories.model;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Component
 @Entity
 @Table(name = "USER_ROLES",
         uniqueConstraints = {
@@ -12,7 +15,6 @@ public class UserToken {
     @GeneratedValue
     @Column(name = "ID")
     private Integer id;
-    @OneToOne
     @JoinColumn(name = "USER_ID")
     private User user;
     @Basic

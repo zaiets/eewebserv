@@ -1,8 +1,11 @@
 package app.repositories.model;
 
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 
+@Component
 @Entity
 @Table(name = "USERS",
         uniqueConstraints = {
@@ -35,8 +38,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum('ADMIN','USER')")
     private Role role;
-    @OneToOne(mappedBy = "user")
-    private UserToken token;
 
     public User() {
     }
@@ -105,14 +106,6 @@ public class User {
         this.role = role;
     }
 
-    public UserToken getToken() {
-        return token;
-    }
-
-    public void setToken(UserToken token) {
-        this.token = token;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,8 +122,7 @@ public class User {
         if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
         if (getPatronymic() != null ? !getPatronymic().equals(user.getPatronymic()) : user.getPatronymic() != null)
             return false;
-        if (getRole() != user.getRole()) return false;
-        return getToken() != null ? getToken().equals(user.getToken()) : user.getToken() == null;
+        return getRole() == user.getRole();
 
     }
 
@@ -144,7 +136,6 @@ public class User {
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getPatronymic() != null ? getPatronymic().hashCode() : 0);
         result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
-        result = 31 * result + (getToken() != null ? getToken().hashCode() : 0);
         return result;
     }
 }

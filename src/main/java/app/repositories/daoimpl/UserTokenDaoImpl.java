@@ -59,10 +59,12 @@ public final class UserTokenDaoImpl extends AbstractUserTokenDao {
     private Session currentSession() {
         return sessionFactory.getCurrentSession();
     }
+
     @Override
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
+
     @Override
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
