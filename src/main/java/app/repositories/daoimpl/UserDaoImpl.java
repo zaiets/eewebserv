@@ -3,6 +3,7 @@ package app.repositories.daoimpl;
 
 import app.repositories.AbstractUserDao;
 import app.repositories.model.User;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +15,23 @@ import java.util.List;
 @Repository
 @Transactional
 public final class UserDaoImpl extends AbstractUserDao {
-    @Autowired
+
+
     private SessionFactory sessionFactory;
 
-    public UserDaoImpl() {
+    @Autowired
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public User read(int id) {
-        return (User) sessionFactory.getCurrentSession().get(User.class, id);
+        return (User) currentSession().get(User.class, id);
     }
 
     @Override
     public User findByEmail(String email) {
-        return (User) sessionFactory.getCurrentSession()
-                .createCriteria(User.class)
+        return (User) currentSession().createCriteria(User.class)
                 .add(Restrictions.eq("email", email))
                 .uniqueResult();
     }
@@ -36,25 +39,29 @@ public final class UserDaoImpl extends AbstractUserDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<User> getAll() {
-        return sessionFactory.getCurrentSession().createCriteria(User.class).list();
+        return currentSession().createCriteria(User.class).list();
     }
 
     @Override
     public User create(User user) {
-        Integer integer = (Integer) sessionFactory.getCurrentSession().save(user);
-        return (User) sessionFactory.getCurrentSession().get(User.class, integer);
+        Integer integer = (Integer) currentSession().save(user);
+        return (User) currentSession().get(User.class, integer);
     }
 
     @Override
     public User update(int id, User user) {
-        sessionFactory.getCurrentSession().update(user);
+        currentSession().update(user);
         return user;
     }
 
     @Override
     public User delete(int id) {
         User user = read(id);
-        sessionFactory.getCurrentSession().delete(user);
+        currentSession().delete(user);
         return user;
+    }
+
+    private Session currentSession() {
+        return sessionFactory.getCurrentSession();
     }
 }

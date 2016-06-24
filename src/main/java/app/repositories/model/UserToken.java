@@ -15,7 +15,7 @@ public class UserToken {
     @GeneratedValue
     @Column(name = "ID")
     private Integer id;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "USER_ID")
     private User user;
     @Basic

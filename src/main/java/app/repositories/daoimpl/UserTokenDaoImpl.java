@@ -3,6 +3,7 @@ package app.repositories.daoimpl;
 
 import app.repositories.AbstractUserTokenDao;
 import app.repositories.model.UserToken;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +15,17 @@ import java.util.List;
 @Repository
 @Transactional
 public final class UserTokenDaoImpl extends AbstractUserTokenDao {
-    @Autowired
+
     private SessionFactory sessionFactory;
 
-
-    public UserTokenDaoImpl() {
+    @Autowired
+    public UserTokenDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public UserToken read(int userId) {
-        return (UserToken) sessionFactory.getCurrentSession()
-                .createCriteria(UserToken.class)
+        return (UserToken) currentSession().createCriteria(UserToken.class)
                 .add(Restrictions.eq("user_id", userId))
                 .uniqueResult();
     }
@@ -32,20 +33,19 @@ public final class UserTokenDaoImpl extends AbstractUserTokenDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<UserToken> getAll() {
-        return sessionFactory.getCurrentSession().createCriteria(UserToken.class).list();
+        return currentSession().createCriteria(UserToken.class).list();
     }
 
     @Override
     public UserToken create(UserToken userToken) {
-        Integer integer = (Integer) sessionFactory.getCurrentSession().save(userToken);
-        return (UserToken) sessionFactory.getCurrentSession().get(UserToken.class, integer);
+        Integer integer = (Integer) currentSession().save(userToken);
+        return (UserToken) currentSession().get(UserToken.class, integer);
     }
 
     @Override
     public UserToken update(int userId, UserToken userToken) {
-        sessionFactory.getCurrentSession().saveOrUpdate(userToken);
-        return (UserToken) sessionFactory.getCurrentSession()
-                .createCriteria(UserToken.class)
+        currentSession().saveOrUpdate(userToken);
+        return (UserToken) currentSession().createCriteria(UserToken.class)
                 .add(Restrictions.eq("user_id", userId))
                 .uniqueResult();
     }
@@ -53,7 +53,11 @@ public final class UserTokenDaoImpl extends AbstractUserTokenDao {
     @Override
     public UserToken delete(int userId) {
         UserToken userToken = read(userId);
-        sessionFactory.getCurrentSession().delete(userToken);
+        currentSession().delete(userToken);
         return userToken;
+    }
+
+    private Session currentSession() {
+        return sessionFactory.getCurrentSession();
     }
 }

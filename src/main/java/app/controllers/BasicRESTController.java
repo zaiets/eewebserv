@@ -3,7 +3,7 @@ package app.controllers;
 import app.dto.UserDto;
 import app.exceptions.EmailExistsException;
 import app.repositories.model.User;
-import app.services.IUserService;
+import app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class BasicRESTController {
 
     @Autowired
-    private IUserService iUserService;
+    private UserService userService;
 
     @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
     public String showRegistrationForm(WebRequest request, Model model) {
@@ -51,7 +51,7 @@ public class BasicRESTController {
     private User createUserAccount(UserDto accountDto, BindingResult result) {
         User registered = null;
         try {
-            registered = iUserService.registerNewUserAccount(accountDto);
+            registered = userService.registerNewUserAccount(accountDto);
         } catch (EmailExistsException e) {
             return null;
         }

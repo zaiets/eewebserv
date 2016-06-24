@@ -2,7 +2,7 @@ package app.services;
 
 import app.dto.UserDto;
 import app.exceptions.EmailExistsException;
-import app.repositories.daoimpl.UserDaoImpl;
+import app.repositories.AbstractUserDao;
 import app.repositories.model.Role;
 import app.repositories.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +12,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserService implements IUserService {
 
     @Autowired
-    private UserDaoImpl userDao;
+    private AbstractUserDao abstractUserDao;
 
     @Override
     public User read(int id) {
-        return userDao.read(id);
+        return abstractUserDao.read(id);
     }
 
     @Override
     public List<User> getAll() {
-        return userDao.getAll();
+        return abstractUserDao.getAll();
     }
 
     @Override
@@ -38,15 +39,15 @@ public class UserService implements IUserService {
         user.setPassword(userDto.getPassword());
         user.setRole(role);
         user.setPatronymic(userDto.getPatronymic());
-        return userDao.update(id, user);
+        return abstractUserDao.update(id, user);
     }
 
     @Override
     public User delete(int id) {
-        return userDao.delete(id);
+        return abstractUserDao.delete(id);
     }
 
-    @Transactional
+
     @Override
     public User registerNewUserAccount(UserDto userDto) throws EmailExistsException {
         if (emailExist(userDto.getEmail())) {
@@ -61,11 +62,11 @@ public class UserService implements IUserService {
         user.setPatronymic(userDto.getPatronymic());
         user.setPassword(userDto.getPassword());
         user.setRole(Role.USER);
-        return userDao.create(user);
+        return abstractUserDao.create(user);
     }
 
     private boolean emailExist(String email) {
-        User user = userDao.findByEmail(email);
+        User user = abstractUserDao.findByEmail(email);
         return user != null;
     }
 }
