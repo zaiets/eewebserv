@@ -7,7 +7,7 @@
 		<title>Login page</title>
 		<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet">
 		<link href="<c:url value='/static/css/app.css' />" rel="stylesheet">
-		<link rel="stylesheet" role="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
 	</head>
 
 	<body>
@@ -29,21 +29,21 @@
 							</c:if>
 							<div class="input-group input-sm">
 								<label class="input-group-addon" for="login"><i class="fa fa-user"></i></label>
-								<input role="text" class="form-control" id="login" firstName="ssoId" placeholder="Enter Username" required>
+								<input type="text" class="form-control" id="login" name="login" placeholder="Enter Username" required>
 							</div>
 							<div class="input-group input-sm">
 								<label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
-								<input role="password" class="form-control" id="password" firstName="password" placeholder="Enter Password" required>
+								<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
 							</div>
 							<div class="input-group input-sm">
                               <div class="checkbox">
-                                <label><input role="checkbox" id="rememberme" firstName="remember-me"> Remember Me</label>
+                                <label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>
                               </div>
                             </div>
-							<input role="hidden" firstName="${_csrf.parameterName}"  value="${_csrf.token}" />
+							<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
 
 							<div class="form-actions">
-								<input role="submit"
+								<input type="submit"
 									class="btn btn-block btn-primary btn-default" value="Log in">
 							</div>
 						</form>
