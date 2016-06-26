@@ -1,7 +1,6 @@
 package app.services;
 
-import app.repositories.AbstractUserDao;
-import app.repositories.model.User;
+import app.entities.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,14 +17,14 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class MyUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AbstractUserDao abstractUserDao;
+    private IUserService userService;
 
 
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = abstractUserDao.findByEmail(email);
+        User user = userService.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("No user found with username: "+ email);
         }

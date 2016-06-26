@@ -3,8 +3,8 @@ package app.services;
 
 import app.dto.UserDto;
 import app.exceptions.EmailExistsException;
-import app.repositories.model.Role;
-import app.repositories.model.User;
+import app.entities.model.Role;
+import app.entities.model.User;
 
 import java.util.List;
 
@@ -20,4 +20,6 @@ public interface IUserService {
     User delete(int id);
 
     User registerNewUserAccount(UserDto accountDto) throws EmailExistsException;
+
+    User findByEmail(String email);
 }

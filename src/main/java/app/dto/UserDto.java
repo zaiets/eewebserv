@@ -4,9 +4,11 @@ package app.dto;
 import app.validate.PasswordMatches;
 import app.validate.ValidEmail;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
+@Component
 @PasswordMatches
 public class UserDto {
     @NotNull

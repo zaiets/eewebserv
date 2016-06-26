@@ -2,9 +2,9 @@ package app.services;
 
 import app.dto.UserDto;
 import app.exceptions.EmailExistsException;
-import app.repositories.AbstractUserDao;
-import app.repositories.model.Role;
-import app.repositories.model.User;
+import app.entities.IUserDao;
+import app.entities.model.Role;
+import app.entities.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,20 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
-public class UserService implements IUserService {
+public class UserServiceImpl implements IUserService {
 
     @Autowired
-    private AbstractUserDao abstractUserDao;
+    private IUserDao userDao;
 
     @Override
     public User read(int id) {
-        return abstractUserDao.read(id);
+        return userDao.read(id);
     }
 
     @Override
     public List<User> getAll() {
-        return abstractUserDao.getAll();
+        return userDao.getAll();
     }
 
     @Override
@@ -39,15 +38,15 @@ public class UserService implements IUserService {
         user.setPassword(userDto.getPassword());
         user.setRole(role);
         user.setPatronymic(userDto.getPatronymic());
-        return abstractUserDao.update(id, user);
+        return userDao.update(id, user);
     }
 
     @Override
     public User delete(int id) {
-        return abstractUserDao.delete(id);
+        return userDao.delete(id);
     }
 
-
+    @Transactional
     @Override
     public User registerNewUserAccount(UserDto userDto) throws EmailExistsException {
         if (emailExist(userDto.getEmail())) {
@@ -62,11 +61,15 @@ public class UserService implements IUserService {
         user.setPatronymic(userDto.getPatronymic());
         user.setPassword(userDto.getPassword());
         user.setRole(Role.USER);
-        return abstractUserDao.create(user);
+        return userDao.create(user);
+    }
+
+    public User findByEmail (String email) {
+        return userDao.findByEmail(email);
     }
 
     private boolean emailExist(String email) {
-        User user = abstractUserDao.findByEmail(email);
+        User user = userDao.findByEmail(email);
         return user != null;
     }
 

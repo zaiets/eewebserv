@@ -1,4 +1,4 @@
-package app.repositories.model;
+package app.entities.model;
 
 import org.springframework.stereotype.Component;
 

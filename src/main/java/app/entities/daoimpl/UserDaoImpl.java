@@ -1,8 +1,8 @@
-package app.repositories.daoimpl;
+package app.entities.daoimpl;
 
 
-import app.repositories.AbstractUserDao;
-import app.repositories.model.User;
+import app.entities.IUserDao;
+import app.entities.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
-@Repository
-public final class UserDaoImpl extends AbstractUserDao {
+
+@Repository("userDao")
+public final class UserDaoImpl implements IUserDao {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -41,6 +41,7 @@ public final class UserDaoImpl extends AbstractUserDao {
         return getCurrentSession().createCriteria(User.class).list();
     }
 
+    @Transactional
     @Override
     public User create(User user) {
         Integer integer = (Integer) getCurrentSession().save(user);

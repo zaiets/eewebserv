@@ -1,9 +1,9 @@
 package app.controllers;
 
 import app.dto.UserDto;
+import app.entities.model.User;
 import app.exceptions.EmailExistsException;
-import app.repositories.model.User;
-import app.services.UserService;
+import app.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class BasicRESTController {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
     public String showRegistrationForm(WebRequest request, Model model) {
