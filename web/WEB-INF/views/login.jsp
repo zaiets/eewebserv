@@ -29,7 +29,7 @@
 							</c:if>
 							<div class="input-group input-sm">
 								<label class="input-group-addon" for="login"><i class="fa fa-user"></i></label>
-								<input type="text" class="form-control" id="login" name="login" placeholder="Enter Username" required>
+								<input type="text" class="form-control" id="login" name="login" placeholder="Enter Login" required>
 							</div>
 							<div class="input-group input-sm">
 								<label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>

@@ -28,7 +28,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements IUserDao 
 	public User findByLogin(String login) {
 		logger.info("Login : {}", login);
 		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("LOGIN", login));
+		crit.add(Restrictions.eq("login", login));
 		User user = (User)crit.uniqueResult();
 		if(user!=null){
 			Hibernate.initialize(user.getUserProfile());
@@ -40,7 +40,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements IUserDao 
 	public User findByEmail(String email) {
 		logger.info("Email : {}", email);
 		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("EMAIL", email));
+		crit.add(Restrictions.eq("email", email));
 		User user = (User)crit.uniqueResult();
 		if(user!=null){
 			Hibernate.initialize(user.getUserProfile());
@@ -70,7 +70,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements IUserDao 
 
 	public void deleteByLogin(String login) {
 		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("LOGIN", login));
+		crit.add(Restrictions.eq("login", login));
 		User user = (User)crit.uniqueResult();
 		delete(user);
 	}

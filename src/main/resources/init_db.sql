@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS user_profile (
 
 CREATE TABLE IF NOT EXISTS persistent_logins (
   series    VARCHAR(256) PRIMARY KEY NOT NULL,
-  login     VARCHAR(128)     NOT NULL,
+  login     VARCHAR(128)             NOT NULL,
   token     TEXT,
   last_used TIMESTAMP
 );
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
   id              INT AUTO_INCREMENT PRIMARY KEY,
   login           VARCHAR(128) NOT NULL,
   email           VARCHAR(128) NOT NULL,
-  second_name     VARCHAR(128),
+  last_name       VARCHAR(128),
   first_name      VARCHAR(128),
   patronymic      VARCHAR(128),
   password        VARCHAR(256) NOT NULL,
@@ -23,3 +23,14 @@ CREATE TABLE IF NOT EXISTS users (
   UNIQUE (login),
   UNIQUE (email)
 );
+
+#set default values
+INSERT INTO `tournament_tae`.`user_profile` (`id`, `role`) VALUES ('1', 'ADMIN');
+INSERT INTO `tournament_tae`.`user_profile` (`id`, `role`) VALUES ('2', 'USER');
+
+INSERT INTO `tournament_tae`.`users`
+(`id`, `login`, `email`, `last_name`, `first_name`, `patronymic`, `password`, `user_profile_id`)
+VALUES
+  ('1', 'admin', 'a@a.a', 'testLastName', 'testFirstName', 'testPatronymic',
+   '$2a$10$4eqIF5s/ewJwHK1p8lqlFOEm2QIA0S8g6./Lok.pQxqcxaBZYChRm', '1');
+

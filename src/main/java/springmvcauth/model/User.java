@@ -33,9 +33,8 @@ public class User implements Serializable {
 	@NotEmpty
 	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
-
-	@NotEmpty
-	@JoinColumn(name = "USER_PROFILE_ID")
+	@OneToOne
+	@JoinColumn(name = "USER_PROFILE_ID", nullable = false)
 	private UserProfile userProfile;
 
 	public User() {
