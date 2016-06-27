@@ -30,6 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Transactional(readOnly=true)
 	public UserDetails loadUserByUsername(String login)
 			throws UsernameNotFoundException {
+
 		User user = userService.findByLogin(login);
 		logger.info("User : {}", user);
 		if(user==null){

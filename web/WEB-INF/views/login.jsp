@@ -19,7 +19,7 @@
 						<form action="${loginUrl}" method="post" class="form-horizontal">
 							<c:if test="${param.error != null}">
 								<div class="alert alert-danger">
-									<p>Invalid login and password.</p>
+									<p>Invalid login/password.</p>
 								</div>
 							</c:if>
 							<c:if test="${param.logout != null}">

@@ -33,6 +33,8 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements IUserDao 
 		if(user!=null){
 			Hibernate.initialize(user.getUserProfile());
 		}
+		System.out.println("login = '" + login + "'");
+		System.out.println(user);
 		return user;
 	}
 
