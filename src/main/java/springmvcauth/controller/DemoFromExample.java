@@ -83,15 +83,15 @@ public class DemoFromExample {
 		}
 
 		/*
-		 * Preferred way to achieve uniqueness of field [sso] should be implementing custom @Unique annotation 
-		 * and applying it on field [sso] of Model class [User].
+		 * Preferred way to achieve uniqueness of field [login] should be implementing custom @Unique annotation
+		 * and applying it on field [login] of Model class [User].
 		 * 
 		 * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
 		 * framework as well while still using internationalized messages.
 		 * 
 		 */
 		if(!userService.isUserLoginUnique(user.getId(), user.getLogin())){
-			FieldError loginError =new FieldError("user","login",messageSource.getMessage("non.unique.login", new String[]{user.getLogin()}, Locale.getDefault()));
+			FieldError loginError = new FieldError("user","login",messageSource.getMessage("non.unique.login", new String[]{user.getLogin()}, Locale.getDefault()));
 		    result.addError(loginError);
 			return "registration";
 		}
