@@ -129,12 +129,12 @@ public class DemoFromExample {
 			return "registration";
 		}
 
-		/*//Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in UI which is a unique key to a User.
+		//below 'if block' needed if you WANT TO ALLOW UPDATING login in UI which is a unique key to a User.
 		if(!userService.isUserLoginUnique(user.getId(), user.getLogin())){
 			FieldError loginError =new FieldError("user","login",messageSource.getMessage("non.unique.login", new String[]{user.getLogin()}, Locale.getDefault()));
 		    result.addError(loginError);
 			return "registration";
-		}*/
+		}
 
 
 		userService.updateUser(user);
