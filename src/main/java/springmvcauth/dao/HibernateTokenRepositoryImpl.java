@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import springmvcauth.model.PersistentLogin;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository("tokenRepositoryDao")
 @Transactional
@@ -48,14 +49,16 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
 	}
 
 	@Override
-	public void removeUserTokens(String username) {
-		logger.info("Removing Token if any for user : {}", username);
+	public void removeUserTokens(String login) {
+		logger.info("Removing Token if any for user : {}", login);
 		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("username", username));
-		PersistentLogin persistentLogin = (PersistentLogin) crit.uniqueResult();
-		if (persistentLogin != null) {
-			logger.info("rememberMe was selected");
-			delete(persistentLogin);
+		crit.add(Restrictions.eq("login", login));
+		List persistentLogins = crit.list();
+		if (persistentLogins != null) {
+			for (Object o : persistentLogins) {
+				logger.info("rememberMe was selected");
+				delete((PersistentLogin) o);
+			}
 		}
 
 	}
