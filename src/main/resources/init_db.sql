@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
 INSERT INTO `tournament_tae`.`user_profile` (`id`, `role`) VALUES ('1', 'ADMIN');
 INSERT INTO `tournament_tae`.`user_profile` (`id`, `role`) VALUES ('2', 'USER');
 
+#login = admin, password = abc125
 INSERT INTO `tournament_tae`.`users`
 (`id`, `login`, `email`, `last_name`, `first_name`, `patronymic`, `password`, `user_profile_id`)
 VALUES
