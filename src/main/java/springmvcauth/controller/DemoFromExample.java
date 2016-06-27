@@ -131,7 +131,7 @@ public class DemoFromExample {
 
 		//below 'if block' needed if you WANT TO ALLOW UPDATING login in UI which is a unique key to a User.
 		if(!userService.isUserLoginUnique(user.getId(), user.getLogin())){
-			FieldError loginError =new FieldError("user","login",messageSource.getMessage("non.unique.login", new String[]{user.getLogin()}, Locale.getDefault()));
+			FieldError loginError = new FieldError("user","login",messageSource.getMessage("non.unique.login", new String[]{user.getLogin()}, Locale.getDefault()));
 		    result.addError(loginError);
 			return "registration";
 		}
@@ -146,7 +146,7 @@ public class DemoFromExample {
 
 	
 	/**
-	 * This method will delete an user by it's SSOID value.
+	 * This method will delete an user by it's login value.
 	 */
 	@RequestMapping(value = { "/delete-user-{login}" }, method = RequestMethod.GET)
 	public String deleteUser(@PathVariable String login) {
