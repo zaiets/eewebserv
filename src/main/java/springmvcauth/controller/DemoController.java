@@ -28,24 +28,24 @@ import java.util.Set;
 @Controller
 @RequestMapping("/")
 @SessionAttributes("roles")
-public class DemoFromExample {
+public class DemoController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	UserProfileService userProfileService;
-	
+
 	@Autowired
 	MessageSource messageSource;
 
 	@Autowired
 	PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
-	
+
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
-	
-	
+
+
 	/**
 	 * This method will list all existing users.
 	 */
@@ -85,17 +85,17 @@ public class DemoFromExample {
 		/*
 		 * Preferred way to achieve uniqueness of field [login] should be implementing custom @Unique annotation
 		 * and applying it on field [login] of Model class [User].
-		 * 
+		 *
 		 * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
 		 * framework as well while still using internationalized messages.
-		 * 
+		 *
 		 */
 		if(!userService.isUserLoginUnique(user.getId(), user.getLogin())){
 			FieldError loginError = new FieldError("user","login",messageSource.getMessage("non.unique.login", new String[]{user.getLogin()}, Locale.getDefault()));
 		    result.addError(loginError);
 			return "registration";
 		}
-		
+
 		userService.saveUser(user);
 
 		model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
@@ -116,7 +116,7 @@ public class DemoFromExample {
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "registration";
 	}
-	
+
 	/**
 	 * This method will be called on form submission, handling POST request for
 	 * updating user in database. It also validates the user input
@@ -144,7 +144,7 @@ public class DemoFromExample {
 		return "registrationsuccess";
 	}
 
-	
+
 	/**
 	 * This method will delete an user by it's login value.
 	 */
@@ -153,7 +153,7 @@ public class DemoFromExample {
 		userService.deleteUserByLogin(login);
 		return "redirect:/list";
 	}
-	
+
 
 	/**
 	 * This method will provide UserProfile list to views
@@ -162,7 +162,7 @@ public class DemoFromExample {
 	public Set<UserProfile> initializeProfiles() {
 		return userProfileService.findAll();
 	}
-	
+
 	/**
 	 * This method handles Access-Denied redirect.
 	 */
@@ -181,7 +181,7 @@ public class DemoFromExample {
 		if (isCurrentAuthenticationAnonymous()) {
 			return "login";
 	    } else {
-	    	return "redirect:/list";  
+	    	return "redirect:/list";
 	    }
 	}
 
@@ -192,7 +192,7 @@ public class DemoFromExample {
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null){    
+		if (auth != null){
 			//new SecurityContextLogoutHandler().logout(request, response, auth);
 			persistentTokenBasedRememberMeServices.logout(request, response, auth);
 			SecurityContextHolder.getContext().setAuthentication(null);
@@ -214,7 +214,7 @@ public class DemoFromExample {
 		}
 		return userName;
 	}
-	
+
 	/**
 	 * This method returns true if users is already authenticated [logged-in], else false.
 	 */
@@ -222,6 +222,4 @@ public class DemoFromExample {
 	    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    return authenticationTrustResolver.isAnonymous(authentication);
 	}
-
-
 }

@@ -7,20 +7,25 @@ import springmvcauth.validate.PasswordMatches;
 import springmvcauth.validate.ValidEmail;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Component
 @PasswordMatches
 public class UserDto {
     @NotNull
     @NotEmpty
+    @Size(min = 3)
     private String login;
     @NotNull
     @NotEmpty
     @ValidEmail
+    @Size(min = 1)
     private String email;
     @NotNull
     @NotEmpty
+    @Size(min = 3)
     private String password;
+    @Size(min = 3)
     private String matchingPassword;
 
     private String lastName;

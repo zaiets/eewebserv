@@ -1,7 +1,5 @@
 package springmvcauth.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,11 +11,9 @@ public class User implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
-	@NotEmpty
 	@Column(name = "LOGIN", unique = true, nullable = false)
 	private String login;
 
-	@NotEmpty
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
 
@@ -30,9 +26,9 @@ public class User implements Serializable {
 	@Column(name = "PATRONYMIC", nullable = true)
 	private String patronymic;
 
-	@NotEmpty
 	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
+
 	@OneToOne
 	@JoinColumn(name = "USER_PROFILE_ID", nullable = false)
 	private UserProfile userProfile;
